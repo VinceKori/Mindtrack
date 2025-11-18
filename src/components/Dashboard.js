@@ -1,6 +1,7 @@
 // src/components/Dashboard.jsx
 
 import React, { useEffect, useState } from 'react';
+import DailyVerse from './DailyVerse';
 import MoodLogger from './MoodLogger';
 import MoodTrends from './MoodTrends';
 import SelfCareGoalForm from './SelfCareGoalForm';
@@ -140,6 +141,9 @@ const Dashboard = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
                     <div style={cardBoxStyle}>
                         <WelcomeBanner currentUser={currentUser} colors={colors} /> 
+                    </div>
+                    <div style={cardBoxStyle}>
+                        <DailyVerse />
                     </div>
                     <div style={cardBoxStyle}>
                         <MoodLogger />

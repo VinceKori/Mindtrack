@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 const DEFAULT_STORAGE_KEY = 'mindtrack_daily_verse'
-const DEFAULT_API_URL = 'https://beta.ourmanna.com/api/v1/get?format=json'
+const DEFAULT_API_URL = '/api/verse'
 const DEFAULT_FALLBACK = {
   text:
     'For I know the plans I have for you, declares the LORD, to give you a future and a hope.',
@@ -19,7 +19,6 @@ export default function DailyVerse({
 }) {
   const [verse, setVerse] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
   const canUseStorage = typeof window !== 'undefined' && !!window.localStorage
 
@@ -81,7 +80,6 @@ export default function DailyVerse({
         if (mounted) setVerse(newVerse)
       } catch (err) {
         console.error('DailyVerse fetch error', err)
-        setError(true)
 
         // On error, try to load any cached value (even if older), otherwise fallback
         try {
@@ -137,10 +135,6 @@ export default function DailyVerse({
               {verse?.reference || fallback.reference}
             </div>
           </>
-        )}
-
-        {error && (
-          <div className="mt-3 text-xs text-red-500">Showing fallback verse due to network error.</div>
         )}
       </div>
     </section>

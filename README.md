@@ -2,6 +2,47 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## MindTrack - Mental Health Tracking Application
+
+A React-based mental health tracking app with mood logging, goals tracking, and daily Bible verses.
+
+### Features
+- User authentication (Firebase Auth)
+- Mood tracking and trends visualization
+- Self-care goal management
+- Daily Bible verse (with caching)
+- Emergency contacts and resources
+- Admin dashboard
+
+### API Proxy Configuration
+
+The app uses a server-side proxy to fetch daily Bible verses from OurManna API, avoiding CORS issues.
+
+**Development**: The proxy is configured in `src/setupProxy.js` and automatically handles requests to `/api/verse`.
+
+**Production**: For production deployment, you'll need to set up a backend proxy or serverless function:
+- **Option 1**: Deploy a simple Express server with the proxy middleware
+- **Option 2**: Use Netlify/Vercel serverless functions (create a function at `/api/verse`)
+- **Option 3**: Use Firebase Cloud Functions to proxy the request
+
+Example Netlify function (`netlify/functions/verse.js`):
+```javascript
+const fetch = require('node-fetch');
+
+exports.handler = async function(event, context) {
+  try {
+    const response = await fetch('https://beta.ourmanna.com/api/v1/get?format=json');
+    const data = await response.json();
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data),
+    };
+  } catch (error) {
+    return { statusCode: 500, body: JSON.stringify({ error: 'Failed to fetch verse' }) };
+  }
+};
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
