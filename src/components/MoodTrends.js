@@ -111,53 +111,61 @@ const MoodTrends = () => {
   // 3. Define Chart options (scales, titles, etc.)
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false, // Allows flexible height/width
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false, // Often cleaner without the single legend item
+        display: false,
       },
       title: {
-        display: true,
-        text: 'Your Emotional Journey Over Time',
-        font: { size: 18 },
-        color: '#333',
+        display: false,
       },
     },
     scales: {
         x: {
-            grid: { display: false } // Hide vertical grid lines
+            grid: { display: false },
+            ticks: {
+              font: { size: 11 },
+              color: '#6C757D'
+            }
         },
         y: {
             min: 1, 
             max: 5,
             ticks: {
-                // Display the actual mood name instead of the score (1-5)
                 callback: function(value) {
                     return Y_AXIS_LABELS[value] || '';
                 },
-                color: '#555',
+                font: { size: 11 },
+                color: '#6C757D',
             },
-            grid: { color: '#eee' } // Light horizontal grid lines
+            grid: { color: '#F1F3F5' }
         }
     }
   };
 
   // 4. Render the component
-  if (loading) return <div style={{textAlign: 'center', padding: '50px', color: '#4c9aff'}}>Loading Mood Data...</div>;
+  if (loading) return <div style={{textAlign: 'center', padding: '20px', color: '#6C757D'}}>Loading...</div>;
 
   return (
-    <div style={{ maxWidth: '90%', height: '400px', margin: '50px auto', padding: '25px', backgroundColor: '#fff', borderRadius: '15px', boxShadow: '0 8px 30px rgba(0,0,0,0.1)' }}>
+    <div style={{ padding: '0' }}>
+      <h3 style={{
+        fontSize: '20px',
+        fontWeight: '600',
+        color: '#2C3E50',
+        marginBottom: '15px',
+        marginTop: 0
+      }}>
+        Mood Trend
+      </h3>
       {chartData.labels.length > 0 ? (
-        // Chart container
-        <div style={{ height: '100%' }}>
+        <div style={{ height: '200px' }}>
             <Line options={chartOptions} data={chartData} />
         </div>
       ) : (
-        <p style={{textAlign: 'center', color: '#888', padding: '50px', fontSize: '18px'}}>
-            It looks like you haven't logged any moods yet! Log a mood to see your first trend chart.
+        <p style={{textAlign: 'center', color: '#6C757D', fontSize: '14px', padding: '20px'}}>
+            No mood data yet. Start logging!
         </p>
       )}
-      
     </div>
   );
 };

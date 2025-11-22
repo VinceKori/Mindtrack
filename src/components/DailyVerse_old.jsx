@@ -112,38 +112,27 @@ export default function DailyVerse({
   return (
     <section
       aria-live="polite"
-      style={{ padding: '0' }}
+      className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6"
     >
-      <h3 style={{
-        fontSize: '20px',
-        fontWeight: '600',
-        color: '#2C3E50',
-        marginBottom: '15px',
-        marginTop: 0
-      }}>
-        Verse of the Day
-      </h3>
+      <div className="flex items-center justify-between">
+        <span className="inline-block bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-1 rounded">
+          Verse of the Day
+        </span>
+      </div>
 
-      <div>
+      <div className="mt-4">
         {loading ? (
-          <div style={{ color: '#6C757D' }}>Loading verse...</div>
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+            <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse" />
+          </div>
         ) : (
           <>
-            <p style={{
-              fontSize: '18px',
-              lineHeight: '1.7',
-              color: '#2C3E50',
-              fontStyle: 'italic',
-              marginBottom: '12px'
-            }}>
-              {verse?.text || fallback.text}
+            <p className="text-gray-800 font-serif text-lg leading-relaxed">
+              “{verse?.text || fallback.text}”
             </p>
-            <div style={{
-              fontSize: '14px',
-              color: '#6C757D',
-              fontStyle: 'italic'
-            }}>
-              - {verse?.reference || fallback.reference}
+            <div className="mt-3 text-sm text-gray-500 italic">
+              {verse?.reference || fallback.reference}
             </div>
           </>
         )}
