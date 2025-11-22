@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { db } from '../firebase';
 import { useAuth } from '../AuthContext';
 import { useTheme } from '../ThemeContext';
@@ -21,12 +21,12 @@ const GoalTracker = () => {
     const [tempValue, setTempValue] = useState('');
 
     // Predefined goals with progress tracking
-    const defaultGoals = [
+    const defaultGoals = useMemo(() => [
         { id: 'hydrate', name: 'Hydrate', target: 2, current: 0, unit: 'L' },
         { id: 'journaling', name: 'Journaling', target: 1, current: 0, unit: 'session' },
         { id: 'mindful', name: 'Mindful Minutes', target: 10, current: 0, unit: 'min' },
         { id: 'walk', name: 'Walk', target: 30, current: 0, unit: 'min' }
-    ];
+    ], []);
 
     const fetchGoals = useCallback(async () => {
         if (!currentUser) {
@@ -59,7 +59,7 @@ const GoalTracker = () => {
         } finally {
             setLoading(false);
         }
-    }, [currentUser]);
+    }, [currentUser, defaultGoals]);
 
     useEffect(() => {
         fetchGoals();
